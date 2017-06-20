@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ply_rs` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ply_rs">
+
+    <title>ply_rs - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate ply_rs</p><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'ply_rs', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>ply_rs</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/ply_rs/lib.rs.html#11-35' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Library for reading/writing ascii and binary PLY files.</p>
+
+<p>This library has two goals:</p>
+
+<ul>
+<li>Get you started easily.</li>
+<li>Give you enough flexibility to boost performance.</li>
+</ul>
+
+<p>Simplicity is provided by giving you high level operations and ready to use data structures:</p>
+
+<ul>
+<li>Read an entire PLY file with <code>read_ply(reader)</code>, see the Parser module.</li>
+<li>Write an entire PLY with <code>ẁrite_ply(target, ply)</code>, se the Writer module.</li>
+<li>Don&#39;t care about data types: <code>DefaultElement</code> is nothing more than a <a href="https://github.com/contain-rs/linked-hash-map">linked HashMap</a> where you access elements with String keys.</li>
+</ul>
+
+<p>Performance can be achieved by using the finer granular methods and your own structs:</p>
+
+<ul>
+<li><code>Writer</code> and <code>Parser</code> provide you with methods down to the line/element level for nice things like streaming architectures.</li>
+<li><code>Ply</code>, <code>Writer</code>, and <code>Parser</code> use generics for the element-type. If HashMaps are too slow for you, define your own structs and implement the <code>PropertyAccess</code> trait. Data will then be written directly to your target format.</li>
+</ul>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="parser/index.html"
+                                  title='mod ply_rs::parser'>parser</a></td>
+                           <td class='docblock-short'>
+                                <p>Reads ascii or binary data into a <code>Ply</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="ply/index.html"
+                                  title='mod ply_rs::ply'>ply</a></td>
+                           <td class='docblock-short'>
+                                <p>Definitions used to model PLY files.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="writer/index.html"
+                                  title='mod ply_rs::writer'>writer</a></td>
+                           <td class='docblock-short'>
+                                <p>Writes ascii or binary data from a <code>Ply</code> to a <code>Write</code> trait.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "ply_rs";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

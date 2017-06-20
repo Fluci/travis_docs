@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Parser` struct in crate `ply_rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Parser">
+
+    <title>ply_rs::parser::Parser - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Parser</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>ply_rs</a>::<wbr><a href='index.html'>parser</a></p><script>window.sidebarCurrent = {name: 'Parser', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ply_rs</a>::<wbr><a href='index.html'>parser</a>::<wbr><a class="struct" href=''>Parser</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#106-108' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Parser&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Reads data given by a <code>Read</code> trait into <code>Ply</code> components.</p>
+
+<p>In most cases <code>read_ply()</code> should suffice.
+If you need finer control over the read process,
+there are methods down to the line/element level.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>The most common case is probably to read from a file:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="comment">// set up a reader, in this case a file.</span>
+<span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;example_plys/greg_turk_example1_ok_ascii.ply&quot;</span>;
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">path</span>).<span class="ident">unwrap</span>();
+
+<span class="comment">// create a parser</span>
+<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">parser</span>::<span class="ident">Parser</span>::<span class="op">&lt;</span><span class="ident">ply</span>::<span class="ident">DefaultElement</span><span class="op">&gt;</span>::<span class="ident">new</span>();
+
+<span class="comment">// use the parser: read the entire file</span>
+<span class="kw">let</span> <span class="ident">ply</span> <span class="op">=</span> <span class="ident">p</span>.<span class="ident">read_ply</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">f</span>);
+
+<span class="comment">// Did it work?</span>
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">ply</span>.<span class="ident">is_ok</span>());</pre>
+
+<p>If you need finer control, you can start splitting the read operations down to the line/element level.</p>
+
+<p>In the follwoing case we first read the header, and then continue with the payload.
+We need to build a Ply our selves.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="comment">// set up a reader as before.</span>
+<span class="comment">// let mut f = ... ;</span>
+<span class="comment">// We need to wrap our `Read` into something providing `BufRead`</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf_read</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="ident">f</span>);
+
+<span class="comment">// create a parser</span>
+<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">parser</span>::<span class="ident">Parser</span>::<span class="op">&lt;</span><span class="ident">ply</span>::<span class="ident">DefaultElement</span><span class="op">&gt;</span>::<span class="ident">new</span>();
+
+<span class="comment">// use the parser: read the header</span>
+<span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">p</span>.<span class="ident">read_header</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf_read</span>);
+<span class="comment">// Did it work?</span>
+<span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">header</span>.<span class="ident">unwrap</span>();
+
+<span class="comment">// read the payload</span>
+<span class="kw">let</span> <span class="ident">payload</span> <span class="op">=</span> <span class="ident">p</span>.<span class="ident">read_payload</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf_read</span>, <span class="kw-2">&amp;</span><span class="ident">header</span>);
+<span class="comment">// Did it work?</span>
+<span class="kw">let</span> <span class="ident">payload</span> <span class="op">=</span> <span class="ident">payload</span>.<span class="ident">unwrap</span>();
+
+<span class="comment">// May be create your own Ply:</span>
+<span class="kw">let</span> <span class="ident">ply</span> <span class="op">=</span> <span class="ident">ply</span>::<span class="ident">Ply</span> {
+    <span class="ident">header</span>: <span class="ident">header</span>,
+    <span class="ident">payload</span>: <span class="ident">payload</span>,
+};
+
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Ply: {:#?}&quot;</span>, <span class="ident">ply</span>);</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/parser/struct.Parser.html" title="struct ply_rs::parser::Parser">Parser</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#116-140' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
+<div class='docblock'><p>Creates a new <code>Parser&lt;E&gt;</code>, where <code>E</code> is the type to store the element data in.</p>
+
+<p>To get started quickly try <code>DefaultElement</code> from the <code>ply</code> module.</p>
+</div><h4 id='method.read_ply' class="method"><span id='read_ply.v' class='invisible'><code>fn <a href='#method.read_ply' class='fnname'>read_ply</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>&gt;(&amp;self, source: &amp;mut T) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../../ply_rs/ply/struct.Ply.html" title="struct ply_rs::ply::Ply">Ply</a>&lt;E&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Expects the complete content of a PLY file.</p>
+
+<p>A PLY file starts with &quot;ply\n&quot;. <code>read_ply</code> reads until all elements have been read as
+defined in the header of the PLY file.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/parser/struct.Parser.html" title="struct ply_rs::parser::Parser">Parser</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#158-272' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'>
+<h1 id='header' class='section-header'><a href='#header'>Header</a></h1></div><div class='impl-items'><h4 id='method.read_header' class="method"><span id='read_header.v' class='invisible'><code>fn <a href='#method.read_header' class='fnname'>read_header</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html" title="trait std::io::BufRead">BufRead</a>&gt;(&amp;self, reader: &amp;mut T) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../../ply_rs/ply/struct.Header.html" title="struct ply_rs::ply::Header">Header</a>&gt;</code></span></h4>
+<div class='docblock'><p>Reads header until and inclusive <code>end_header</code>.</p>
+
+<p>A ply file starts with &quot;ply\n&quot;. The header and the payload are separated by a line <code>end_header\n</code>.
+This method reads all headere elemnts up to <code>end_header</code>.</p>
+</div><h4 id='method.read_header_line' class="method"><span id='read_header_line.v' class='invisible'><code>fn <a href='#method.read_header_line' class='fnname'>read_header_line</a>(&amp;self, line: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;Line&gt;</code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/parser/struct.Parser.html" title="struct ply_rs::parser::Parser">Parser</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#278-314' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'>
+<h1 id='payload' class='section-header'><a href='#payload'>Payload</a></h1></div><div class='impl-items'><h4 id='method.read_payload' class="method"><span id='read_payload.v' class='invisible'><code>fn <a href='#method.read_payload' class='fnname'>read_payload</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html" title="trait std::io::BufRead">BufRead</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;mut T, <br>&nbsp;&nbsp;&nbsp;&nbsp;header: &amp;<a class="struct" href="../../ply_rs/ply/struct.Header.html" title="struct ply_rs::ply::Header">Header</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="type" href="../../ply_rs/ply/type.Payload.html" title="type ply_rs::ply::Payload">Payload</a>&lt;E&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Reads payload. Encoding is chosen according to the encoding field in <code>header</code>.</p>
+</div><h4 id='method.read_payload_for_element' class="method"><span id='read_payload_for_element.v' class='invisible'><code>fn <a href='#method.read_payload_for_element' class='fnname'>read_payload_for_element</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html" title="trait std::io::BufRead">BufRead</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;mut T, <br>&nbsp;&nbsp;&nbsp;&nbsp;element_def: &amp;<a class="struct" href="../../ply_rs/ply/struct.ElementDef.html" title="struct ply_rs::ply::ElementDef">ElementDef</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;header: &amp;<a class="struct" href="../../ply_rs/ply/struct.Header.html" title="struct ply_rs::ply::Header">Header</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;E&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Reads entire list of elements from payload. Encoding is chosen according to <code>header</code>.</p>
+
+<p>Make sure to read the elements in the order as they are defined in the header.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/parser/struct.Parser.html" title="struct ply_rs::parser::Parser">Parser</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#340-439' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'>
+<h1 id='ascii' class='section-header'><a href='#ascii'>Ascii</a></h1></div><div class='impl-items'><h4 id='method.read_ascii_element' class="method"><span id='read_ascii_element.v' class='invisible'><code>fn <a href='#method.read_ascii_element' class='fnname'>read_ascii_element</a>(&amp;self, line: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, element_def: &amp;<a class="struct" href="../../ply_rs/ply/struct.ElementDef.html" title="struct ply_rs::ply::ElementDef">ElementDef</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;E&gt;</code></span></h4>
+<div class='docblock'><p>Read a single element. Assume it is encoded in ascii.</p>
+
+<p>Make sure all elements are parsed in the order they are defined in the header.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/parser/struct.Parser.html" title="struct ply_rs::parser::Parser">Parser</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/parser/mod.rs.html#458-553' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'>
+<h1 id='binary' class='section-header'><a href='#binary'>Binary</a></h1></div><div class='impl-items'><h4 id='method.read_big_endian_element' class="method"><span id='read_big_endian_element.v' class='invisible'><code>fn <a href='#method.read_big_endian_element' class='fnname'>read_big_endian_element</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;mut T, <br>&nbsp;&nbsp;&nbsp;&nbsp;element_def: &amp;<a class="struct" href="../../ply_rs/ply/struct.ElementDef.html" title="struct ply_rs::ply::ElementDef">ElementDef</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;E&gt;</code></span></h4>
+<div class='docblock'><p>Reads a single element as declared in èlement_def. Assumes big endian encoding.</p>
+
+<p>Make sure all elements are parsed in the order they are defined in the header.</p>
+</div><h4 id='method.read_little_endian_element' class="method"><span id='read_little_endian_element.v' class='invisible'><code>fn <a href='#method.read_little_endian_element' class='fnname'>read_little_endian_element</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;reader: &amp;mut T, <br>&nbsp;&nbsp;&nbsp;&nbsp;element_def: &amp;<a class="struct" href="../../ply_rs/ply/struct.ElementDef.html" title="struct ply_rs::ply::ElementDef">ElementDef</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;E&gt;</code></span></h4>
+<div class='docblock'><p>Reads a single element as declared in èlement_def. Assumes big endian encoding.</p>
+
+<p>Make sure all elements are parsed in the order they are defined in the header.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "ply_rs";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

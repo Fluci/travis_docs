@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Parser","Reads data given by a `Read` trait into `Ply` components."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Writer","Writes a `Ply` to a `Write` trait."]]});
