@@ -79,9 +79,9 @@ The payload groups elments with the same type together in a vector.</p>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/ply/struct.Ply.html" title="struct ply_rs::ply::Ply">Ply</a>&lt;E&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/consistency.rs.html#40-71' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.make_consistent' class="method"><span id='make_consistent.v' class='invisible'><code>fn <a href='#method.make_consistent' class='fnname'>make_consistent</a>(&amp;mut self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../ply_rs/ply/struct.ConsistencyError.html" title="struct ply_rs::ply::ConsistencyError">ConsistencyError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/consistency.rs.html#52-70' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Takes a mutable <code>Ply</code> object, performs commen operations to make it consistent,</p>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/ply/struct.Ply.html" title="struct ply_rs::ply::Ply">Ply</a>&lt;E&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/consistency.rs.html#47-108' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.make_consistent' class="method"><span id='make_consistent.v' class='invisible'><code>fn <a href='#method.make_consistent' class='fnname'>make_consistent</a>(&amp;mut self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../ply_rs/ply/struct.ConsistencyError.html" title="struct ply_rs::ply::ConsistencyError">ConsistencyError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/consistency.rs.html#64-107' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Takes a mutable <code>Ply</code> object, performs common operations to make it consistent,</p>
 
 <p>When written, a consistent <code>Ply</code> object generates a valid PLY file.
 This method also checks for invariants that can&#39;t be fixed automatically.
@@ -91,6 +91,11 @@ If something can not be fixed automatically, it returns a <code>ConsistencyError
 <p>This method should always be called before writing to a file with <code>Writer</code>.
 Only exception is <code>write_ply()</code>, which, for convenience, performs the check itself.
 See <code>write_ply_unchecked()</code> for a variant that expects the client to assure consistency.</p>
+
+<p>No checks on encoding are performed.
+For maximal compatability, only ascii characters should be used but this is not checked.
+Every relevant string is checked to not contain line breaks.
+Identifiers are also checked to not contain white spaces.</p>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.PropertyAccess.html" title="trait ply_rs::ply::PropertyAccess">PropertyAccess</a>&gt; <a class="struct" href="../../ply_rs/ply/struct.Ply.html" title="struct ply_rs::ply::Ply">Ply</a>&lt;E&gt;</code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/ply_data_structure.rs.html#32-40' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/ply_data_structure.rs.html#34-39' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new <code>Ply&lt;E&gt;</code>.</p>

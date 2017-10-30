@@ -786,7 +786,6 @@
 <span id="741">741</span>
 <span id="742">742</span>
 <span id="743">743</span>
-<span id="744">744</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Reads ascii or binary data into a `Ply`.</span>
 
@@ -1250,19 +1249,18 @@ use super::Parser;
     <span class="doccomment">///</span>
     <span class="doccomment">/// Make sure all elements are parsed in the order they are defined in the header.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_big_endian_element</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">element_def</span>: <span class="kw-2">&amp;</span><span class="ident">ElementDef</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
-        <span class="doccomment">/// Reduce coupling with ByteOrder</span>
+        <span class="comment">// Reduce coupling with ByteOrder</span>
         <span class="self">self</span>.<span class="ident">__read_binary_element</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="ident">reader</span>, <span class="ident">element_def</span>)
     }
     <span class="doccomment">/// Reads a single element as declared in èlement_def. Assumes big endian encoding.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Make sure all elements are parsed in the order they are defined in the header.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_little_endian_element</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">element_def</span>: <span class="kw-2">&amp;</span><span class="ident">ElementDef</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
-        <span class="doccomment">/// Reduce coupling with ByteOrder</span>
+        <span class="comment">// Reduce coupling with ByteOrder</span>
         <span class="self">self</span>.<span class="ident">__read_binary_element</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="ident">reader</span>, <span class="ident">element_def</span>)
     }
 
     <span class="doccomment">/// internal wrapper</span>
-    <span class="doccomment">/// TODO: is there a way to put the binary and ascii parts in their own files?</span>
     <span class="kw">fn</span> <span class="ident">__read_big_endian_payload_for_element</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">location</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">LocationTracker</span>, <span class="ident">element_def</span>: <span class="kw-2">&amp;</span><span class="ident">ElementDef</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">__read_binary_payload_for_element</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="ident">reader</span>, <span class="ident">location</span>, <span class="ident">element_def</span>)
     }
