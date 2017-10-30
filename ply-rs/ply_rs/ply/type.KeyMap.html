@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>ply_rs</a>::<wbr><a href='index.html'>ply</a></p><script>window.sidebarCurrent = {name: 'KeyMap', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Type Definition KeyMap</p><div class="block items"><ul><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>ply_rs</a>::<wbr><a href='index.html'>ply</a></p><script>window.sidebarCurrent = {name: 'KeyMap', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -49,8 +49,15 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ply_rs/ply/key_map.rs.html#6' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type KeyMap&lt;V&gt; = <a class="struct" href="../../linked_hash_map/struct.LinkedHashMap.html" title="struct linked_hash_map::LinkedHashMap">LinkedHashMap</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, V&gt;;</pre><div class='docblock'><p>Alias to reduce coupling with <code>LinkedHashMap</code></p>
-</div></section>
+<pre class='rust typedef'>type KeyMap&lt;V&gt; = <a class="struct" href="../../linked_hash_map/struct.LinkedHashMap.html" title="struct linked_hash_map::LinkedHashMap">LinkedHashMap</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, V&gt;;</pre><div class='docblock'><p>Alias to reduce coupling with <code>LinkedHashMap</code></p>
+</div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Addable&lt;V&gt;' class='impl'><span class='in-band'><code>impl&lt;V:&nbsp;<a class="trait" href="../../ply_rs/ply/trait.Key.html" title="trait ply_rs::ply::Key">Key</a>&gt; <a class="trait" href="../../ply_rs/ply/trait.Addable.html" title="trait ply_rs::ply::Addable">Addable</a>&lt;V&gt; for <a class="type" href="../../ply_rs/ply/type.KeyMap.html" title="type ply_rs::ply::KeyMap">KeyMap</a>&lt;V&gt;</code><a href='#impl-Addable&lt;V&gt;' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/key_map.rs.html#15-19' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.add' class="method"><span id='add.v' class='invisible'><code>fn <a href='../../ply_rs/ply/trait.Addable.html#tymethod.add' class='fnname'>add</a>(&amp;mut self, value: V)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ply_rs/ply/key_map.rs.html#16-18' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Takes a value that provides a key and stores it under the given key.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -107,7 +114,6 @@
         window.rootPath = "../../";
         window.currentCrate = "ply_rs";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>
